@@ -15,14 +15,27 @@
     <h1>Simple maps example</h1>
 
     <div id="map_canvas"></div>
-    <button onclick="doOnce()">Only do something once</button>
+    
+    <p><input type="button" value="入力ダイアログ" onClick="disp()"></p>
+    
 </div>
     <script>
-      function doOnce() {
-        if (document.cookie.replace(/(?:(?:^|.*;\s*)doSomethingOnlyOnce\s*\=\s*([^;]*).*$)|^.*$/, "$1") !== "true") {
-        alert("Do something here!");
-        document.cookie = "doSomethingOnlyOnce=true; expires=Fri, 31 Dec 9999 23:59:59 GMT";
-      }
+function disp(){
+
+	// 入力ダイアログを表示 ＋ 入力内容を user に代入
+	user = window.prompt("ユーザー名を入力してください", "");
+
+	// 入力された
+	if(user == 'tama'){
+    initMap();
+	  //location.href = "example_tama.html";
+	}
+	else if(user != "" && user != null){　// 入力内容が一致しない場合は警告ダイアログを表示
+		window.alert(user + 'さんは登録されていません');
+	}
+	else{　// 空の場合やキャンセルした場合は警告ダイアログを表示
+		window.alert('キャンセルされました');
+	}
 }
     
     
