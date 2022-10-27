@@ -1,56 +1,58 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Maps example</title>
-    <style>
-      #map_canvas {
-        width: 600px;
-        height: 600px;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>Simple maps example</h1>
-
-    <div id="map_canvas"></div>
-    
-    <p><input type="button" value="入力ダイアログ" onClick="disp()"></p>
-    
-</div>
-    <script>
-function disp(){
-
-	// 入力ダイアログを表示 ＋ 入力内容を user に代入
-	user = window.prompt("ユーザー名を入力してください", "");
-
-	// 入力された
-	if(user == 'tama'){
-    initMap();
-	  //location.href = "example_tama.html";
-	}
-	else if(user != "" && user != null){　// 入力内容が一致しない場合は警告ダイアログを表示
-		window.alert(user + 'さんは登録されていません');
-	}
-	else{　// 空の場合やキャンセルした場合は警告ダイアログを表示
-		window.alert('キャンセルされました');
-	}
+<head>
+<script>
+function setCookie(cname,cvalue,exdays) {
+  var d = new Date();
+  d.setTime(d.getTime() + (exdays*24*60*60*1000));
+  var expires = "expires=" + d.toGMTString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
-    
-    
-    
-    function initMap() {
-      var myOptions = {
-        zoom: 20,
-        center: {lat: 35.72290750217049, lng: 139.46210807795433},
-        mapTypeId: google.maps.MapTypeId.TERRAIN,
-        disableDefaultUI: true
-      }
-      var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+function getCookie(cname) {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for(var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
     }
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAiV2ZbFIYuD3N4hzGLstSn2e4ZG5A7QlU&callback=initMap"
-    async defer></script>
-  </body>
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
+function checkCookie() {
+  var user=getCookie("username");
+  console.log(user);
+  if (user != "" ) {
+    alert("今日は" + user + "さん");
+  } else {
+     user = prompt("名前を教えてください:","");
+     if (user != "" && user != null) {
+       setCookie("username", user, 30);
+     }
+  }
+}
+	
+function delCookie()
+{
+  document.cookie = "username=; max-age=0; path=/";
+}
+	
+
+</script>
+</head>
+  <h1> Cookie の例 </h1>
+<body>
+<div style="background-color : #CCC;">
+   <input type="button" value="クッキー判定" onclick="checkCookie()">
+  <input type="button" value="クッキー削除" onclick="delCookie()">
+</div>
+
+</body>
+
 </html>
